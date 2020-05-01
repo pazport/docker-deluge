@@ -28,13 +28,52 @@ RUN \
 	deluge-console \
 	deluge-web \
 	p7zip-full \
+	python-pip \
+	git \
+	python3-pip \
+	nano \
+	ffmpeg \
 	unrar \
 	unzip && \
+ pip3 install --no-cache-dir \
+    apprise \
+    chardet \
+    pynzb \
+    requests \
+	requests[security] \
+	requests-cache \
+	babelfish \
+	tmdbsimple \
+	idna \
+	mutagen \
+	guessit \
+	subliminal \
+	python-dateutil \
+	stevedore \
+	qtfaststart \
+    sabyenc && \
  echo "**** cleanup ****" && \
  rm -rf \
 	/tmp/* \
 	/var/lib/apt/lists/* \
 	/var/tmp/*
+
+
+#mp4automator
+RUN git clone https://github.com/pazport/sickbeard_mp4_automator.git mp4automator
+RUN chmod -R 777 /mp4automator
+RUN chown -R 1000:1000 /mp4automator
+
+#update ffmpeg
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install software-properties-common -y
+RUN add-apt-repository ppa:savoury1/graphics -y
+RUN add-apt-repository ppa:savoury1/multimedia -y
+RUN add-apt-repository ppa:savoury1/ffmpeg4 -y
+RUN apt-get update && apt-get upgrade -y
+RUN apt-get install ffmpeg -y
+RUN apt-get update && apt-get upgrade -y
+
 
 # add local files
 COPY root/ /
